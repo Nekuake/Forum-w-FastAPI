@@ -1,0 +1,3 @@
+
+class DatabaseNotSetException(Exception):
+    pass
