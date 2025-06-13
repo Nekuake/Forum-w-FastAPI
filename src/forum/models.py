@@ -23,3 +23,4 @@ class Post(BaseEntity):
     type = Column(String(64), nullable=False)
     content = Column(String(1024), nullable=False)
     forum_id = Column(ForeignKey(Forum.id), nullable=False)
+    parent_post_id = Column(ForeignKey('Post.id'), nullable=True)
