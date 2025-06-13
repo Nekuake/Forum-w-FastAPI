@@ -7,3 +7,5 @@ class PostRemovedException(Exception):
 class UserNotPrivilegedException(Exception):
     pass
 
+class TriedToUpdateNonExistentField(Exception):
+    pass
