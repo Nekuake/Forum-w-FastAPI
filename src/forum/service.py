@@ -54,7 +54,12 @@ class BaseService:
         return False
 
 
-class ForumService:
+class ForumService(BaseService):
     def __init__(self):
-        self.db = get_db()
+        super().__init__(Forum)
+
+class PostService(BaseService):
+    def __init__(self):
+        super().__init__(Post)
+
 
