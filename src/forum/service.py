@@ -25,10 +25,8 @@ class BaseService:
 
 
     def get(self, id: int, filters=None, offset:int=0, limit:int=1) -> Optional[ModelType]:
-        if filters is None:
-            return self.db.query(self.model).filter(self.model.id == id).offset(offset).limit(limit)
-        else:
-            return self.db.query(self.model).filter(self.model.id == id).filter(*filters).offset(offset).limit(limit)
+        filters["deleted"] = False
+        return self.db.query(self.model).filter(self.model.id == id).filter(*filters).offset(offset).limit(limit)
 
 
     def update(self, id: int, obj_in: Dict[str, Any]) -> Optional[ModelType]:
