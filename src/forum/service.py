@@ -24,12 +24,15 @@ class BaseService:
         return db_obj
 
 
-    def get(self, id: int, filters=None, offset:int=0, limit:int=1) -> Optional[ModelType]:
+    def get_all(self, filters=None, offset:int=0, limit:int=1) -> Optional[ModelType]:
         filters["deleted"] = False
-        return self.db.query(self.model).filter(self.model.id == id).filter(*filters).offset(offset).limit(limit)
+        return self.db.query(self.model).filter(*filters).offset(offset).limit(limit)
+
+    def get(self, id:str) -> List[ModelType]:
+        return self.db.query(self.model).get(id)
 
 
-    def update(self, id: int, obj_in: Dict[str, Any]) -> Optional[ModelType]:
+    def update(self, id: str, obj_in: Dict[str, Any]):
         db_obj = self.get(id)
         if db_obj:
             for field, value in obj_in.items():
@@ -46,9 +49,9 @@ class BaseService:
     def delete(self, id: int) -> bool:
         db_obj = self.get(id)
         if db_obj:
-            self.db.delete(db_obj)
+            db_obj.deleted = True
             self.db.commit()
-            return True
+            return db_obj
         return False
 
 
