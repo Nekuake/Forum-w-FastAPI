@@ -46,7 +46,7 @@ class BaseService:
             self.db.refresh(db_obj)
         return db_obj
 
-    def delete(self, id: int) -> bool:
+    def delete(self, id: str) -> bool:
         db_obj = self.get(id)
         if db_obj:
             db_obj.deleted = True

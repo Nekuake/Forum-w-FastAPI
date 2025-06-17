@@ -27,13 +27,22 @@ def get_forum(forum_id:str, db: Session = Depends(get_db)):
     response = service.get(forum_id)
     return response
 
-
 @forum_router.post("/", response_model=schemas.Forum)
 def create_forum(forum: schemas.ForumCreate, db: Session = Depends(get_db())):
     service = ForumService()
     new_forum = service.create(forum.model_dump())
     return new_forum
 
+@forum_router.put("/{forum_id}", response_model=schemas.Forum)
+def update_forum(forum_id:str, forum: schemas.ForumUpdate, db: Session = Depends(get_db)):
+    service = ForumService()
+    updated_forum=service.update(forum_id, forum.model_dump())
+    return updated_forum
 
+
+def delete_forum(forum_id:str, db: Session = Depends(get_db)):
+    service = ForumService()
+    deleted_forum=service.delete(forum_id)
+    return deleted_forum
 
 #Posts
