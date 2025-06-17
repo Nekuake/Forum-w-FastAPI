@@ -24,9 +24,9 @@ class BaseService:
         return db_obj
 
 
-    def get_all(self, db, filters=None, offset:int=0, limit:int=1) -> Optional[ModelType]:
+    def get_all(self, db, filters=None, offset:int=0, limit:int=1) -> List[ModelType]:
         filters["deleted"] = False
-        return db.query(self.model).filter(*filters).offset(offset).limit(limit)
+        return db.query(self.model).filter(*filters).offset(offset).limit(limit).all()
 
     def get(self, id:str, db) -> ModelType:
         entity_object = db.query(self.model).get(id)
