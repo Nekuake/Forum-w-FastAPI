@@ -1,12 +1,10 @@
 from src.forum.exceptions import (TriedToUpdateNonExistentField,
-                                  TriedToDeleteNonExistentEntity,
                                   EntityRemovedException,
                                   EntityNotFoundException)
 from src.forum.models import Forum, Post
-from typing import TypeVar, List, Optional, Dict, Any
+from typing import TypeVar, List, Dict, Any
 from src.database import  Base
 import logging
-from starlette.status import HTTP_404_NOT_FOUND
 
 
 log=logging.getLogger(__name__)

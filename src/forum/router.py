@@ -1,11 +1,11 @@
 from http.client import responses
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
 from src.forum import schemas
 from src.forum.service import PostService, ForumService
-from src.database import get_db, Base
+from src.database import get_db
 
 
 
@@ -18,7 +18,7 @@ forum_router = APIRouter(
 @forum_router.get("/", response_model=List)
 def get_forums(offset:int=0, limit:int=10, db: Session = Depends(get_db())):
     service = ForumService()
-    response = service.get_all(offset=offset, limit=limit, db)
+    response = service.get_all(db, offset=offset, limit=limit)
     return response
 
 @forum_router.get("{forum_id}", response_model=schemas.Forum)
