@@ -39,10 +39,34 @@ def update_forum(forum_id:str, forum: schemas.ForumUpdate, db: Session = Depends
     updated_forum=service.update(forum_id, forum.model_dump())
     return updated_forum
 
-
+@forum_router.delete("/{forum_id}", response_model=schemas.Forum)
 def delete_forum(forum_id:str, db: Session = Depends(get_db)):
     service = ForumService()
     deleted_forum=service.delete(forum_id)
     return deleted_forum
 
 #Posts
+
+post_router = APIRouter(
+    prefix="/post",
+    tags=["posts"]
+)
+
+@post_router.post("/", response_model=schemas.Post)
+def create_post(post: schemas.PostCreate, db: Session = Depends(get_db)):
+    service = PostService()
+    post = service.create(post.model_dump())
+    return post
+
+@post_router.get("/{post_id}", response_model=schemas.Post)
+def get_post(post_id:str, db: Session = Depends(get_db)):
+    service = PostService()
+    post = service.get(post_id)
+    return post
+
+@post_router.delete("/{post_id}", response_model=schemas.Post)
+def delete_post(post_id:str, db: Session = Depends(get_db)):
+    service = PostService()
+    deleted_post=service.delete(post_id)
+    return deleted_post
+
